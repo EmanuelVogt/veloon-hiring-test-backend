@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpileOnly src/main/index.ts",
+    "dev": "nodemon src/main/index.ts",
     "build": "tsc",
     "start": "node dist/main/index.js",
     "test": "vitest"
@@ -9,9 +9,15 @@
     "express": "^4.21.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.7",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.1",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.3",
     "vitest": "^3.0.3"
