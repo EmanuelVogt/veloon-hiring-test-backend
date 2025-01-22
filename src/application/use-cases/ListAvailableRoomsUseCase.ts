@@ -1,13 +1,17 @@
+import { IRoomRepository } from "../../domain/repositories/IRoomRepository";
 import { Room } from "../../domain/entities/Room";
 
-export class ListAvailableRoomsUseCase {
-  private readonly rooms: Room[] = [
-    new Room("1", "Quarto Single", 1),
-    new Room("2", "Quarto Duplo", 2),
-    new Room("3", "Suíte Família", 4),
-  ];
+interface ListAvailableRoomsInput {
+  date?: Date;
+  minStars?: number;
+  maxPrice?: number;
+}
 
-  async execute(): Promise<Room[]> {
-    return this.rooms;
+export class ListAvailableRoomsUseCase {
+  constructor(private roomRepository: IRoomRepository) {}
+
+  async execute(input: ListAvailableRoomsInput): Promise<Room[]> {
+    const rooms = await this.roomRepository.filterAvailableRooms(input);
+    return rooms;
   }
 }
