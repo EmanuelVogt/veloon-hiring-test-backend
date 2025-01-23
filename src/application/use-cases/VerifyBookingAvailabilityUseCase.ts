@@ -1,3 +1,5 @@
+// src/application/use-cases/VerifyBookingAvailabilityUseCase.ts
+
 import { IBookingRepository } from "../../domain/repositories/IBookingRepository";
 import { IRoomRepository } from "../../domain/repositories/IRoomRepository";
 import { Booking } from "../../domain/entities/Booking";
@@ -11,16 +13,23 @@ export class VerifyBookingAvailabilityUseCase {
   ) {}
 
   async execute(startDate: Date, endDate: Date, room: Room): Promise<boolean> {
-    while (startDate < endDate) {
+    const currentDate = new Date(startDate);
+    const finalDate = new Date(endDate);
+
+    if (currentDate >= finalDate) {
+      return false;
+    }
+
+    while (currentDate < finalDate) {
       const availability = room.availability.find(
-        (avail) => avail.date.toDateString() === startDate.toDateString()
+        (avail) => avail.date.toDateString() === currentDate.toDateString()
       );
 
       if (!availability || !availability.isAvailable) {
         return false;
       }
 
-      startDate.setDate(startDate.getDate() + 1);
+      currentDate.setDate(currentDate.getDate() + 1);
     }
 
     room.availability.forEach((avail) => {
@@ -31,9 +40,15 @@ export class VerifyBookingAvailabilityUseCase {
 
     await this.roomRepository.update(room);
 
-    const booking = new Booking(uuid4(), room, startDate, endDate);
+    const booking = new Booking(
+      uuid4(),
+      room,
+      new Date(startDate),
+      new Date(endDate)
+    );
 
     await this.bookingRepository.create(booking);
+
     return true;
   }
 }
