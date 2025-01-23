@@ -6,11 +6,21 @@ export class Room {
     public numberOfBeds: number,
     public stars: number,
     public pricePerNight: number,
-    public availability: Availability[]
+    public imageUrl: string,
+    public images: string[],
+    public availability: Availability[],
+    public reviews: Reviews[]
   ) {}
 }
 
 export interface Availability {
   date: Date;
   isAvailable: boolean;
+}
+
+export interface Reviews {
+  user: string
+  pictureUrl: string
+  comment: string
+  date: Date
 }
