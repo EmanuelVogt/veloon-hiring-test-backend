@@ -10,8 +10,10 @@ import { adapterRoute } from "./adapters/express-adapter/express-route-adapter";
 import { ListRoomsController } from "../presentation/http/controllers/ListRoomsController";
 import { CreateBookingController } from "../presentation/http/controllers/CreateBookingController";
 import { DeleteBookingController } from "../presentation/http/controllers/DeleteBookingController";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.use(bodyParser.json());
