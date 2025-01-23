@@ -8,7 +8,7 @@ export class DeleteBookingController implements Controller {
 
   async handle(req: any): Promise<HttpResponse> {
     try {
-      const { id } = req.params;
+      const { id } = req;
 
       if (!id) {
         return badRequest(new Error("Booking ID is required"));
