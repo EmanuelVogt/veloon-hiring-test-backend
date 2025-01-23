@@ -1,4 +1,6 @@
 import express from "express";
+import bodyParser from "body-parser";
+
 import { ListAvailableRoomsUseCase } from "../application/use-cases/ListAvailableRoomsUseCase";
 import { CreateBookingUseCase } from "../application/use-cases/CreateBookingUseCase";
 import { InMemoryRoomRepository } from "../infrastructure/repositories/InMemoryRoomRepository";
@@ -12,6 +14,9 @@ import { DeleteBookingController } from "../presentation/http/controllers/Delete
 const app = express();
 app.use(express.json());
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 const roomRepository = new InMemoryRoomRepository();
 const bookingRepository = new InMemoryBookingRepository(roomRepository);
 
@@ -24,7 +29,11 @@ const deleteBookingUseCase = new DeleteBookingUseCase(bookingRepository);
 
 app.get(
   "/rooms",
-  adapterRoute(new ListRoomsController(listAvailableRoomsUseCase))
+  adapterRoute(
+    new ListRoomsController(
+      listAvailableRoomsUseCase
+    )
+  )
 );
 app.post(
   "/bookings",
