@@ -13,6 +13,8 @@ import { DeleteBookingController } from "../presentation/http/controllers/Delete
 import cors from "cors";
 import { FindBookingUseCase } from "../application/use-cases/FindBookingUseCase";
 import { VerifyBookingAvailabilityUseCase } from "../application/use-cases/VerifyBookingAvailabilityUseCase";
+import { FindRoomByIdUseCase } from "../application/use-cases/FindRoomByIdUseCase";
+import { FindRoomByIdController } from "../presentation/http/controllers/FindRoomByIdController";
 
 const app = express();
 app.use(cors());
@@ -35,9 +37,15 @@ const verifyBookingAvailabilityUseCase = new VerifyBookingAvailabilityUseCase(
   bookingRepository,
   roomRepository
 );
+const findRoomByIdUseCase = new FindRoomByIdUseCase(roomRepository);
+
 app.get(
   "/rooms",
   adapterRoute(new ListRoomsController(listAvailableRoomsUseCase))
+);
+app.get(
+  "/room/:id",
+  adapterRoute(new FindRoomByIdController(findRoomByIdUseCase))
 );
 app.post(
   "/bookings",
