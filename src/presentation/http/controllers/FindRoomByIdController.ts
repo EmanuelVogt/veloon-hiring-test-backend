@@ -15,7 +15,6 @@ export class FindRoomByIdController implements Controller {
 
       const room = await this.findRoomByIdUseCase.execute(id);
 
-      console.log(room)
       return ok(room);
     } catch (error) {
       console.log(error);
