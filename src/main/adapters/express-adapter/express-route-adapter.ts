@@ -5,7 +5,8 @@ export const adapterRoute = (controller: Controller) => {
   return async (request: Request, response: Response) => {
     const req = {
       ...(request.body || {}),
-      ...(request.params || {})
+      ...(request.params || {}),
+      ...(request.query || {})
     }
     const httpResponse = await controller.handle(req)
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
