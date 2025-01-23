@@ -8,8 +8,8 @@ export class ListRoomsController implements Controller {
 
   async handle(req: any): Promise<HttpResponse> {
     try {
-      const { date, minStars, maxPrice } = req.query;
-
+      const query = req;
+      const { date, minStars, maxPrice } = query;
       const filter: any = {};
 
       if (date) {
