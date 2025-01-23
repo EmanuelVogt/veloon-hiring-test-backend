@@ -19,7 +19,10 @@ export class InMemoryRoomRepository implements IRoomRepository {
           room.numberOfBeds,
           room.stars,
           room.pricePerNight,
-          room.availability.map((avail) => ({ ...avail }))
+          room.imageUrl,
+          room.images,
+          room.availability.map((avail) => ({ ...avail })),
+          room.reviews
         )
     );
   }
